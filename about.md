@@ -2,6 +2,8 @@
 layout: page
 title: "About"
 description: "Lishen,李屾"
+header : About
+group: navigation
 ---
 {% include JB/setup %}
 
