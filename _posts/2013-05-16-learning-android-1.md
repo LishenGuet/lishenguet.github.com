@@ -3,7 +3,7 @@ layout: post
 title: "learning Android 1"
 description: "学习android系列1"
 category: Android
-tags: [Activity,AsyncTask,TextWatcher,AndroidApiForWeibo]
+tags: [Activity, AsyncTask, TextWatcher, AndroidApiForWeibo]
 ---
 {% include JB/setup %}
 
