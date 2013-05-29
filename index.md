@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Welcome
-tagline: 技术，技术，还是技术！
+tagline: 生活，产品，技术！
 ---
 {% include JB/setup %}
 
