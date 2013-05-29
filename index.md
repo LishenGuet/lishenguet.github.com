@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Welcome
+title: 做一个有故事的人
 tagline: 生活，产品，技术！
 ---
 {% include JB/setup %}
