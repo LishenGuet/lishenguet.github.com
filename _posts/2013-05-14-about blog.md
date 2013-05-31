@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "关于博客"
-titleEnglish: "about-my-blog"
 description: "我的博客演变从blog1.0->blog2.0->blog3.0"
 category: 生活
 tags: [博客, 生活, Github]

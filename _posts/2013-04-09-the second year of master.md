@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "研二下"
-englishtitle: "the-second-year-of-master"
 description: "记录研究生二年级下学期一半的生活"
 category: 生活
 tags: [感悟, 计划, 生活]

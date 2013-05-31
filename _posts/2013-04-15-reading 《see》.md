@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "读《看见》"
-titleEnglish: "see"
 description: "柴静新书《看见》的读书笔记"
 category: 读书
 tags: [笔记, 读书, 生活]
