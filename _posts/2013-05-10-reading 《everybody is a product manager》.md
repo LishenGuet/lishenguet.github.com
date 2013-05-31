@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "读《人人都是产品经理》"
+titleEnglish: "everybody-is-a-product-manager"
 description: "从零开始学习有关产品的知识"
 category: 读书
 tags: [读书, 笔记, 产品]

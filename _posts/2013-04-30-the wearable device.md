@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "互联网第三次浪潮-可穿戴设备"
+titleEnglish: "wearable-Device"
 description: "关注互联网的有一次产品革命，可穿戴设备，如谷歌眼镜等"
 category: 产品
 tags: [可穿戴设备, 互联网浪潮, 产品]

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "生活控，控生活"
+titleEnglish: "life-controller"
 description: "戒掉微博，时间合理规划，巧用思维导图"
 category: 生活
 tags: [时间规划, 生活, 思维导图, 读书]

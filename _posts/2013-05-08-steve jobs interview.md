@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "乔布斯《遗失的访谈》"
+titleEnglish: "steve-jobs-interview"
 description: "学习乔帮主的思维理念"
 category: 产品
 tags: [感悟, 笔记, 访谈]

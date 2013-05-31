@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "这些年的数学建模比赛"
+titleEnglish: "these-years-math-modeling"
 description: "谈一谈这些年来的数学建模比赛"
 category: 生活
 tags: [建模, 生活, 感悟]
