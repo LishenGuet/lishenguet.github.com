@@ -79,11 +79,15 @@ task对于activity就是它的身份证，拥有相同的affinity的多个activi
 
 ###Intent几种常见的flags
 
-1. `FLAG_ACTIVITY_NEW_TASK` 当Intent对象包含这个标记时，系统会寻找或创建一个新的task来放置目标Activity，寻找时依据目标Activity的taskAffinity属性进行匹配，如果找到一个task的taskAffinity与之相同，就将目标Activity压入此task中，如果查找无果，则创建一个新的task，并将该task的taskAffinity设置为目标Activity的taskActivity，将目标Activity放置于此task。注意，如果同一个应用中Activity的taskAffinity都使用默认值或都设置相同值时，应用内的Activity之间的跳转使用这个标记是没有意义的，因为当前应用task就是目标Activity最好的宿主。
+**`FLAG_ACTIVITY_NEW_TASK`**
+
+当Intent对象包含这个标记时，系统会寻找或创建一个新的task来放置目标Activity，寻找时依据目标Activity的taskAffinity属性进行匹配，如果找到一个task的taskAffinity与之相同，就将目标Activity压入此task中，如果查找无果，则创建一个新的task，并将该task的taskAffinity设置为目标Activity的taskActivity，将目标Activity放置于此task。注意，如果同一个应用中Activity的taskAffinity都使用默认值或都设置相同值时，应用内的Activity之间的跳转使用这个标记是没有意义的，因为当前应用task就是目标Activity最好的宿主。
 
 例如两个应用A与B。每个应用都有两个Activity,分别为Aa,Ab和Ba,Bb。现在我希望在Ba上直接启动Ab，如果没有`FLAG_ACTIVITY_NEW_TASK`，那么在B的这个task里面就会有一个Ab进入到栈顶。这个时候退屏，再分别进入B与A会发现，B显示的是Ab,A显示的是Aa。所以对A没有任何影响。如果有NEW_TASK,那么系统就会根据A的affintiy新建一个task，这样Ba与Ab就不在一个Task,退屏打开A和B的时候会发现，A的直接就在Ab上，而B的像刚打开一样。
 
-2. `FLAG_ACTIVITY_CLEAR_TOP` 当Intent对象包含这个标记时，如果在栈中发现存在Activity实例，则清空这个实例之上的Activity，使其处于栈顶。这个SecondActivity既可以在onNewIntent()中接收到传来的Intent，也可以把自己销毁之后重新启动来接受这个Intent。在使用默认的“standard”启动模式下，如果没有在Intent使用到`FLAG_ACTIVITY_SINGLE_TOP`标记，那么它将关闭后重建，如果使用了这个`FLAG_ACTIVITY_SINGLE_TOP`标记，则会使用已存在的实例；对于其他启动模式，无需再使用`FLAG_ACTIVITY_SINGLE_TOP`，它都将使用已存在的实例，Intent会被传递到这个实例的onNewIntent()中。
+**`FLAG_ACTIVITY_CLEAR_TOP`** 
+
+当Intent对象包含这个标记时，如果在栈中发现存在Activity实例，则清空这个实例之上的Activity，使其处于栈顶。这个SecondActivity既可以在onNewIntent()中接收到传来的Intent，也可以把自己销毁之后重新启动来接受这个Intent。在使用默认的“standard”启动模式下，如果没有在Intent使用到`FLAG_ACTIVITY_SINGLE_TOP`标记，那么它将关闭后重建，如果使用了这个`FLAG_ACTIVITY_SINGLE_TOP`标记，则会使用已存在的实例；对于其他启动模式，无需再使用`FLAG_ACTIVITY_SINGLE_TOP`，它都将使用已存在的实例，Intent会被传递到这个实例的onNewIntent()中。
 
 不同之处在于：一个是用原来的，一个是销毁了重建，代码不同在于，本身该Activity是standard模式：
 
@@ -95,9 +99,13 @@ task对于activity就是它的身份证，拥有相同的affinity的多个activi
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);  
         startActivity(intent); 
 
-3. `FLAG_ACTIVITY_SINGLE_TOP` 当task中存在目标Activity实例并且位于栈的顶端时，不再创建一个新的，直接利用这个实例。我们在上边的例子中也有讲到。
+**`FLAG_ACTIVITY_SINGLE_TOP`** 
 
-4. `FLAG_ACTIVITY_REORDER_TO_FRONT` 在多个activity中，`FLAG_ACTIVITY_SINGLE_TOP`会finish其他activity，而这个不会。这个会将已有的Activity重新放到栈顶。
+当task中存在目标Activity实例并且位于栈的顶端时，不再创建一个新的，直接利用这个实例。我们在上边的例子中也有讲到。
+
+**`FLAG_ACTIVITY_REORDER_TO_FRONT`** 
+
+在多个activity中，`FLAG_ACTIVITY_SINGLE_TOP`会finish其他activity，而这个不会。这个会将已有的Activity重新放到栈顶。
 但是重新回到栈顶可能传递的参数可能没有意义，因为intent没有更新。所以在接受的时候应该更新intent。例如：
         
         //需要重写这个方法，并且设置intent
@@ -116,14 +124,22 @@ task对于activity就是它的身份证，拥有相同的affinity的多个activi
 
 ###activity与task相关属性
 
-1. android:allowTaskReparenting 这个属性用来标记一个Activity实例在当前应用退居后台后，是否能从启动它的那个task移动到有共同affinity的task，“true”表示可以移动，“false”表示它必须呆在当前应用的task中，默认值为false。如果一个这个Activity的<activity>元素没有设定此属性，设定在<application>上的此属性会对此Activity起作用。例如在一个应用中要查看一个web页面，在启动系统浏览器Activity后，这个Activity实例和当前应用处于同一个task，当我们的应用退居后台之后用户再次从主选单中启动应用，此时这个Activity实例将会重新宿主到Browser应用的task内，在我们的应用中将不会再看到这个Activity实例，而如果此时启动Browser应用，就会发现，第一个界面就是我们刚才打开的web页面，证明了这个Activity实例确实是宿主到了Browser应用的task内。
+**android:allowTaskReparenting** 
 
-2.android:alwaysRetainTaskState 这个属性用来标记应用的task是否保持原来的状态，“true”表示总是保持，“false”表示不能够保证，默认为“false”。此属性只对task的根Activity起作用，其他的Activity都会被忽略。默认情况下，如果一个应用在后台呆的太久例如30分钟，用户从主选单再次选择该应用时，系统就会对该应用的task进行清理，除了根Activity，其他Activity都会被清除出栈，但是如果在根Activity中设置了此属性之后，用户再次启动应用时，仍然可以看到上一次操作的界面。
+这个属性用来标记一个Activity实例在当前应用退居后台后，是否能从启动它的那个task移动到有共同affinity的task，“true”表示可以移动，“false”表示它必须呆在当前应用的task中，默认值为false。如果一个这个Activity的<activity>元素没有设定此属性，设定在<application>上的此属性会对此Activity起作用。例如在一个应用中要查看一个web页面，在启动系统浏览器Activity后，这个Activity实例和当前应用处于同一个task，当我们的应用退居后台之后用户再次从主选单中启动应用，此时这个Activity实例将会重新宿主到Browser应用的task内，在我们的应用中将不会再看到这个Activity实例，而如果此时启动Browser应用，就会发现，第一个界面就是我们刚才打开的web页面，证明了这个Activity实例确实是宿主到了Browser应用的task内。
+
+**android:alwaysRetainTaskState** 
+
+这个属性用来标记应用的task是否保持原来的状态，“true”表示总是保持，“false”表示不能够保证，默认为“false”。此属性只对task的根Activity起作用，其他的Activity都会被忽略。默认情况下，如果一个应用在后台呆的太久例如30分钟，用户从主选单再次选择该应用时，系统就会对该应用的task进行清理，除了根Activity，其他Activity都会被清除出栈，但是如果在根Activity中设置了此属性之后，用户再次启动应用时，仍然可以看到上一次操作的界面。
 
 这个属性对于一些应用非常有用，例如Browser应用程序，有很多状态，比如打开很多的tab，用户不想丢失这些状态，使用这个属性就极为恰当。
 
-3. android:clearTaskOnLaunch 这个属性用来标记是否从task清除除根Activity之外的所有的Activity，“true”表示清除，“false”表示不清除，默认为“false”。同样，这个属性也只对根Activity起作用，其他的Activity都会被忽略。
+**android:clearTaskOnLaunch** 
+
+这个属性用来标记是否从task清除除根Activity之外的所有的Activity，“true”表示清除，“false”表示不清除，默认为“false”。同样，这个属性也只对根Activity起作用，其他的Activity都会被忽略。
 
 如果设置了这个属性为“true”，每次用户从桌面回到这个应用时，都只会看到根Activity，task中的其他Activity都会被清除出栈。如果我们的应用中引用到了其他应用的Activity，这些Activity设置了allowTaskReparenting属性为“true”，则它们会被重新宿主到有共同affinity的task中。
 
-4. android:finishOnTaskLaunch 这个属性和android:allowReparenting属性相似，不同之处在于allowReparenting属性是重新宿主到有共同affinity的task中，而finishOnTaskLaunch属性是销毁实例。如果这个属性和android:allowReparenting都设定为“true”，则这个属性胜出。
+**android:finishOnTaskLaunch** 
+
+这个属性和android:allowReparenting属性相似，不同之处在于allowReparenting属性是重新宿主到有共同affinity的task中，而finishOnTaskLaunch属性是销毁实例。如果这个属性和android:allowReparenting都设定为“true”，则这个属性胜出。
