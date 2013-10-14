@@ -165,7 +165,7 @@ getText()     返回的是我们之前sharedPreferen文件保存的值
 
 ###隐式
 
-比如说我在某个App例如新浪微博中点击拍照，会跳转到照相机的界面。但是当我新装了camer360或之类的第三方照相app的时候在微博中点击照相就会先弹出一个Dialog来让我选择是使用默认camer还是camer360.这个地方就要用到隐式Intent。如`Intent intent = new Intent(Intent.ACTION_SEND);`
+比如说我在某个App例如新浪微博中点击拍照，会跳转到照相机的界面。但是当我新装了camer360或之类的第三方照相app的时候在微博中点击照相就会先弹出一个Dialog来让我选择是使用默认camer还是camer360.这个地方就要用到隐式Intent。如`Intent intent = new Intent("com.example.testandlearning.seemAction");`
 
 这里我们用action来实现。
 
